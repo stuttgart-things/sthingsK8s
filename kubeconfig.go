@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 Patrick Hermann patrick.hermann@sva.de
+Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 */
 
 package k8s
@@ -9,7 +9,6 @@ import (
 	"os"
 
 	sthingsBase "github.com/stuttgart-things/sthingsBase"
-
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 )

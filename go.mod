@@ -1,4 +1,4 @@
-module github/sthingsK8s
+module github.com/stuttgart-things/sthingsK8s
 
 go 1.20
 
