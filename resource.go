@@ -123,7 +123,7 @@ func getExistenceOfUnstructedObject(resourceREST dynamic.ResourceInterface) []K8
 
 	for i, _ := range unstructuredList.Items {
 
-		fmt.Println(unstructuredList.Items[i])
+		// fmt.Println(unstructuredList.Items[i])
 
 		resourceList = append(resourceList, K8sResource{unstructuredList.Items[i].GetName(), unstructuredList.Items[i].GetKind(), unstructuredList.Items[i].GetAPIVersion()})
 
