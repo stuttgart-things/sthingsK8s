@@ -132,7 +132,7 @@ func getExistenceOfUnstructedObject(resourceREST dynamic.ResourceInterface) []K8
 
 }
 
-func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResource []byte, namespace string) {
+func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResource []byte, namespace string) (resourceCreated bool) {
 
 	mapper, dynamicREST := CreateRestMapperAndDynamicInterface(kubeconfig)
 	objectsInYAML := bytes.Split(templatedResource, []byte("---"))
@@ -147,6 +147,8 @@ func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResour
 
 			if _, err := resourceREST.Create(context.Background(), unstructuredObj, metav1.CreateOptions{}); err != nil {
 				log.Fatal(err)
+			} else {
+				resourceCreated = true
 			}
 
 		} else {
@@ -164,10 +166,14 @@ func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResour
 				Force:        &forceConflicts,
 			}); err != nil {
 				log.Fatal(err)
+			} else {
+				resourceCreated = true
 			}
 
 		}
 	}
+
+	return
 }
 
 func getUnstructedObjectAndDynamicResourceInterface(objectInYAML []byte, mapper meta.RESTMapper, dynamicREST dynamic.Interface, namespace string) (*unstructured.Unstructured, dynamic.ResourceInterface) {
