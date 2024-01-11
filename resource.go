@@ -132,7 +132,7 @@ func getExistenceOfUnstructedObject(resourceREST dynamic.ResourceInterface) []K8
 
 }
 
-func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResource []byte, namespace string) (resourceCreated bool) {
+func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResource []byte, namespace string) (bool, error) {
 
 	mapper, dynamicREST := CreateRestMapperAndDynamicInterface(kubeconfig)
 	objectsInYAML := bytes.Split(templatedResource, []byte("---"))
@@ -143,37 +143,37 @@ func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResour
 
 		if len(getExistenceOfUnstructedObject(resourceREST)) < 0 {
 
-			fmt.Println("Creating resource ...")
+			fmt.Println("CREATING RESOURCE ...")
 
 			if _, err := resourceREST.Create(context.Background(), unstructuredObj, metav1.CreateOptions{}); err != nil {
 				log.Fatal(err)
 			} else {
-				resourceCreated = true
+				return true, err
 			}
 
 		} else {
 
-			fmt.Println("Patching resource ...")
+			fmt.Println("PATCHING RESOURCE ...")
 
 			data, err := json.Marshal(unstructuredObj)
 			if err != nil {
+				// fmt.Println("HELLO")
 				log.Fatal(err)
 			}
 
 			forceConflicts := true
+
 			if _, err := resourceREST.Patch(context.Background(), unstructuredObj.GetName(), types.ApplyPatchType, data, metav1.PatchOptions{
-				FieldManager: "sthings-cli",
+				FieldManager: "sthings-k8s",
 				Force:        &forceConflicts,
 			}); err != nil {
-				log.Fatal(err)
-			} else {
-				resourceCreated = true
+				return false, err
 			}
 
 		}
 	}
+	return true, nil
 
-	return
 }
 
 func getUnstructedObjectAndDynamicResourceInterface(objectInYAML []byte, mapper meta.RESTMapper, dynamicREST dynamic.Interface, namespace string) (*unstructured.Unstructured, dynamic.ResourceInterface) {
