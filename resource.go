@@ -157,7 +157,7 @@ func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResour
 
 			data, err := json.Marshal(unstructuredObj)
 			if err != nil {
-				log.Fatal(err)
+				return false, err
 			}
 
 			forceConflicts := false
