@@ -157,11 +157,10 @@ func CreateDynamicResourcesFromTemplate(kubeconfig *rest.Config, templatedResour
 
 			data, err := json.Marshal(unstructuredObj)
 			if err != nil {
-				// fmt.Println("HELLO")
 				log.Fatal(err)
 			}
 
-			forceConflicts := true
+			forceConflicts := false
 
 			if _, err := resourceREST.Patch(context.Background(), unstructuredObj.GetName(), types.ApplyPatchType, data, metav1.PatchOptions{
 				FieldManager: "sthings-k8s",
