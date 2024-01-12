@@ -143,6 +143,6 @@ func TestConvertYAMLtoObject(t *testing.T) {
 func TestConvertYAMLtoPipelineRun(t *testing.T) {
 	assert := assert.New(t)
 
-	validPipelineRun, _ := ConvertYAMLtoPipelineRun(yamlPipelineRun)
+	validPipelineRun, _, _ := ConvertYAMLtoPipelineRun(yamlPipelineRun)
 	assert.Equal(validPipelineRun, true)
 }

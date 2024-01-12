@@ -43,17 +43,16 @@ func ConvertYAMLtoDeployment(yamlString string) (bool, *v1Apps.Deployment) {
 	return true, deployment
 }
 
-func ConvertYAMLtoPipelineRun(yamlString string) (bool, *v1.PipelineRun) {
+func ConvertYAMLtoPipelineRun(yamlString string) (bool, *v1.PipelineRun, error) {
 
 	pipelienRun := &v1.PipelineRun{}
 	fmt.Println(yamlString)
 
 	err := yaml.Unmarshal([]byte(yamlString), pipelienRun)
 	if err != nil {
-		fmt.Printf("%#v", err)
-		return false, nil
+		return false, nil, err
 	}
 	fmt.Printf("%#v\n", pipelienRun)
 
-	return true, pipelienRun
+	return true, pipelienRun, err
 }
