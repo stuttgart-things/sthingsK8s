@@ -11,12 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateDynamicResourcesFromTemplatet(t *testing.T) {
-	assert := assert.New(t)
-
-	namespace := "default"
-	clusterConfig, _ := GetKubeConfig("/home/sthings/.kube/pve-cd43")
-	validManifest := `apiVersion: v1
+var (
+	validManifest = `apiVersion: v1
 kind: ConfigMap
 metadata:
   name: game-config-1
@@ -25,13 +21,20 @@ data:
   lives: "5"
 `
 
-	invalidManifest := `apiVersion: v1
+	invalidManifest = `apiVersion: v1
 kind: ConfigMap
 metadata:
   name: game-config-1
 stringData:
   enemies: raiders
 `
+)
+
+func TestCreateDynamicResourcesFromTemplate(t *testing.T) {
+	assert := assert.New(t)
+
+	namespace := "default"
+	clusterConfig, _ := GetKubeConfig("/home/sthings/.kube/pve-cd43")
 
 	fmt.Println(validManifest)
 	fmt.Println(invalidManifest)
