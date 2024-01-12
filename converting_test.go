@@ -110,13 +110,12 @@ spec:
   pipelineRef:
     resolver: git
     params:
-    - name: url
-      value: "https://github.com/stuttgart-things/stuttgart-things.git"
-    - name: revision
-      value: main
-    - name: pathInRepo
-      value: stageTime/pipelines/simulate-stagetime-pipelineruns.yaml
-
+      - name: url
+        value: "https://github.com/stuttgart-things/stuttgart-things.git"
+      - name: revision
+        value: main
+      - name: pathInRepo
+        value: stageTime/pipelines/simulate-stagetime-pipelineruns.yaml
 `
 )
 
@@ -135,9 +134,15 @@ func TestVerifyYamlJobDefinition(t *testing.T) {
 }
 
 func TestYAMLtoObject(t *testing.T) {
-	YAMLtoObject(yamlDeployment)
+	assert := assert.New(t)
+
+	validDeployment, _ := YAMLtoDeployment(yamlDeployment)
+	assert.Equal(validDeployment, true)
 }
 
 func TestYAMLtoPipelineRun(t *testing.T) {
-	YAMLtoPipelineRun(yamlPipelineRun)
+	assert := assert.New(t)
+
+	validPipelineRun, _ := YAMLtoPipelineRun(yamlPipelineRun)
+	assert.Equal(validPipelineRun, true)
 }

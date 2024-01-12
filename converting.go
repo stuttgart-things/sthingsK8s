@@ -26,7 +26,7 @@ func VerifyYamlJobDefinition(jobManifest string) (bool, error) {
 	return true, nil
 }
 
-func YAMLtoObject(yamlString string) {
+func YAMLtoDeployment(yamlString string) (bool, *v1Apps.Deployment) {
 
 	fmt.Println(yamlString)
 	decode := scheme.Codecs.UniversalDeserializer().Decode
@@ -38,22 +38,22 @@ func YAMLtoObject(yamlString string) {
 	fmt.Println(obj)
 
 	deployment := obj.(*v1Apps.Deployment)
-
 	fmt.Printf("%#v\n", deployment)
+
+	return true, deployment
 }
 
-func YAMLtoPipelineRun(yamlString string) {
+func YAMLtoPipelineRun(yamlString string) (bool, *v1.PipelineRun) {
+
+	pipelienRun := &v1.PipelineRun{}
 	fmt.Println(yamlString)
 
-	pr := &v1.PipelineRun{}
-	err := yaml.Unmarshal([]byte(yamlString), pr)
+	err := yaml.Unmarshal([]byte(yamlString), pipelienRun)
 	if err != nil {
 		fmt.Printf("%#v", err)
+		return false, nil
 	}
+	fmt.Printf("%#v\n", pipelienRun)
 
-	fmt.Println(err)
-
-	fmt.Println(pr.Kind)
-
-	fmt.Printf("%#v\n", pr)
+	return true, pipelienRun
 }
