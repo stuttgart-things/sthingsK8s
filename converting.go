@@ -7,16 +7,17 @@ package k8s
 import (
 	"fmt"
 
+	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	"gopkg.in/yaml.v2"
-	v1 "k8s.io/api/batch/v1"
-
 	v1Apps "k8s.io/api/apps/v1"
+	batch "k8s.io/api/batch/v1"
+
 	"k8s.io/client-go/kubernetes/scheme"
 )
 
 func VerifyYamlJobDefinition(jobManifest string) (bool, error) {
 
-	job := &v1.Job{}
+	job := &batch.Job{}
 	err := yaml.Unmarshal([]byte(jobManifest), job)
 	if err != nil {
 		return false, err
@@ -27,14 +28,32 @@ func VerifyYamlJobDefinition(jobManifest string) (bool, error) {
 
 func YAMLtoObject(yamlString string) {
 
+	fmt.Println(yamlString)
 	decode := scheme.Codecs.UniversalDeserializer().Decode
 
 	obj, _, err := decode([]byte(yamlString), nil, nil)
 	if err != nil {
 		fmt.Printf("%#v", err)
 	}
+	fmt.Println(obj)
 
 	deployment := obj.(*v1Apps.Deployment)
 
 	fmt.Printf("%#v\n", deployment)
+}
+
+func YAMLtoPipelineRun(yamlString string) {
+	fmt.Println(yamlString)
+
+	pr := &v1.PipelineRun{}
+	err := yaml.Unmarshal([]byte(yamlString), pr)
+	if err != nil {
+		fmt.Printf("%#v", err)
+	}
+
+	fmt.Println(err)
+
+	fmt.Println(pr.Kind)
+
+	fmt.Printf("%#v\n", pr)
 }
