@@ -39,6 +39,41 @@ spec:
           command: ["echo", "Welcome to my Node app"]
        restartPolicy: Never
 `
+
+	yamlDeployment = `
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: my-complex-app-my-complex-app
+    labels:
+    app: my-complex-app
+    chart: my-complex-app-0.2.0
+    release: my-complex-app
+    heritage: Tiller
+spec:
+    replicas: 1
+    template:
+    metadata:
+        labels:
+        app: my-complex-app
+        release: my-complex-app
+    spec:
+        containers:
+        - name: my-complex-app
+        image: "nginx:stable"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        livenessProbe:
+        httpGet:
+            path: /
+            port: 80
+        readinessProbe:
+        httpGet:
+            path: /
+            port: 80
+        resources: {}
+`
 )
 
 func TestVerifyYamlJobDefinition(t *testing.T) {
@@ -52,5 +87,10 @@ func TestVerifyYamlJobDefinition(t *testing.T) {
 	invalid, err := VerifyYamlJobDefinition(invalidJobManifest)
 	fmt.Println(err)
 	assert.Equal(invalid, false)
+
+}
+
+func TestYAMLtoObject(t *testing.T) {
+	YAMLtoObject(yamlDeployment)
 
 }

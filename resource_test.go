@@ -12,7 +12,9 @@ import (
 )
 
 var (
-	validManifest = `apiVersion: v1
+	namespace        = "default"
+	pathToKubeconfig = "/home/sthings/.kube/pve-cd43"
+	validManifest    = `apiVersion: v1
 kind: ConfigMap
 metadata:
   name: game-config-1
@@ -46,4 +48,15 @@ func TestCreateDynamicResourcesFromTemplate(t *testing.T) {
 	resource2Created, err2 := CreateDynamicResourcesFromTemplate(clusterConfig, []byte(invalidManifest), namespace)
 	fmt.Println(resource2Created, err2)
 	assert.Equal(resource2Created, false)
+}
+
+func Test2CreateDynamicResourcesFromTemplate(t *testing.T) {
+
+	clusterConfig, _ := GetKubeConfig(pathToKubeconfig)
+	mapper, dynamicREST := CreateRestMapperAndDynamicInterface(clusterConfig)
+
+	unstructuredObj, resourceREST := getUnstructedObjectAndDynamicResourceInterface([]byte(validManifest), mapper, dynamicREST, namespace)
+	fmt.Println("unstructuredObj", unstructuredObj)
+	fmt.Println("resourceREST", resourceREST)
+
 }
