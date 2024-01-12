@@ -133,16 +133,16 @@ func TestVerifyYamlJobDefinition(t *testing.T) {
 
 }
 
-func TestYAMLtoObject(t *testing.T) {
+func TestConvertYAMLtoObject(t *testing.T) {
 	assert := assert.New(t)
 
-	validDeployment, _ := YAMLtoDeployment(yamlDeployment)
+	validDeployment, _ := ConvertYAMLtoDeployment(yamlDeployment)
 	assert.Equal(validDeployment, true)
 }
 
-func TestYAMLtoPipelineRun(t *testing.T) {
+func TestConvertYAMLtoPipelineRun(t *testing.T) {
 	assert := assert.New(t)
 
-	validPipelineRun, _ := YAMLtoPipelineRun(yamlPipelineRun)
+	validPipelineRun, _ := ConvertYAMLtoPipelineRun(yamlPipelineRun)
 	assert.Equal(validPipelineRun, true)
 }

@@ -26,7 +26,7 @@ func VerifyYamlJobDefinition(jobManifest string) (bool, error) {
 	return true, nil
 }
 
-func YAMLtoDeployment(yamlString string) (bool, *v1Apps.Deployment) {
+func ConvertYAMLtoDeployment(yamlString string) (bool, *v1Apps.Deployment) {
 
 	fmt.Println(yamlString)
 	decode := scheme.Codecs.UniversalDeserializer().Decode
@@ -43,7 +43,7 @@ func YAMLtoDeployment(yamlString string) (bool, *v1Apps.Deployment) {
 	return true, deployment
 }
 
-func YAMLtoPipelineRun(yamlString string) (bool, *v1.PipelineRun) {
+func ConvertYAMLtoPipelineRun(yamlString string) (bool, *v1.PipelineRun) {
 
 	pipelienRun := &v1.PipelineRun{}
 	fmt.Println(yamlString)
