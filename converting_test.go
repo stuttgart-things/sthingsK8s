@@ -82,6 +82,10 @@ metadata:
   name: simulate-stagetime-pipelinerun-25
   namespace: tektoncd
 spec:
+  timeouts:
+    tasks: 20s
+    finally: 10s
+    pipeline: 30s
   params:
     - name: gitRepoUrl
       default: 'https://github.com/stuttgart-things/stageTime-server.git'
@@ -143,6 +147,7 @@ func TestConvertYAMLtoObject(t *testing.T) {
 func TestConvertYAMLtoPipelineRun(t *testing.T) {
 	assert := assert.New(t)
 
-	validPipelineRun, _, _ := ConvertYAMLtoPipelineRun(yamlPipelineRun)
+	validPipelineRun, _, err := ConvertYAMLtoPipelineRun(yamlPipelineRun)
+	fmt.Println(err)
 	assert.Equal(validPipelineRun, true)
 }

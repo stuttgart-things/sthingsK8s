@@ -7,8 +7,8 @@ package k8s
 import (
 	"fmt"
 
+	"github.com/ghodss/yaml"
 	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
-	"gopkg.in/yaml.v3"
 	v1Apps "k8s.io/api/apps/v1"
 	batch "k8s.io/api/batch/v1"
 
