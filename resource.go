@@ -33,8 +33,6 @@ type K8sResource struct {
 	ApiVersion string `mapstructure:"api-version"`
 }
 
-var prGroupResource = schema.GroupVersionResource{Group: "tekton.dev", Resource: "pipelineruns"}
-
 func CreateRestMapperAndDynamicInterface(kubeconfig *rest.Config) (meta.RESTMapper, dynamic.Interface) {
 
 	c, err := kubernetes.NewForConfig(kubeconfig)
@@ -191,4 +189,26 @@ func getUnstructedObjectAndDynamicResourceInterface(objectInYAML []byte, mapper 
 	resourceREST := getDynamicResourceInterface(unstructuredObj, mapper, dynamicREST)
 
 	return unstructuredObj, resourceREST
+}
+
+func DeleteResource(kubeconfig *rest.Config, name, group, version, resouce, namespace string) (bool, error) {
+	var err error
+	var resourceDeleted bool
+
+	_, dynamicREST := CreateRestMapperAndDynamicInterface(kubeconfig)
+
+	resourceRes := schema.GroupVersionResource{Group: group, Version: version, Resource: resouce}
+
+	deletePolicy := metav1.DeletePropagationForeground
+	deleteOptions := metav1.DeleteOptions{
+		PropagationPolicy: &deletePolicy,
+	}
+
+	if err = dynamicREST.Resource(resourceRes).Namespace(namespace).Delete(context.TODO(), name, deleteOptions); err != nil {
+		panic(err)
+	} else {
+		resourceDeleted = true
+	}
+
+	return resourceDeleted, err
 }

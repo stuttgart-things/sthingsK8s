@@ -60,3 +60,22 @@ func Test2CreateDynamicResourcesFromTemplate(t *testing.T) {
 	fmt.Println("resourceREST", resourceREST)
 
 }
+
+func TestDeleteResource(t *testing.T) {
+
+	assert := assert.New(t)
+
+	name := "game-config-1"
+	group := ""
+	version := "v1"
+	resouce := "configmaps"
+	namespace := "default"
+
+	clusterConfig, _ := GetKubeConfig(pathToKubeconfig)
+	CreateDynamicResourcesFromTemplate(clusterConfig, []byte(validManifest), namespace)
+
+	resourceDeleted, _ := DeleteResource(clusterConfig, name, group, version, resouce, namespace)
+
+	assert.Equal(resourceDeleted, true)
+
+}
