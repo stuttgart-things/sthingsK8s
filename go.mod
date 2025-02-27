@@ -4,8 +4,8 @@ go 1.20
 
 require (
 	github.com/ghodss/yaml v1.0.0
-	github.com/stretchr/testify v1.8.4
-	github.com/stuttgart-things/sthingsBase v0.1.11
+	github.com/stretchr/testify v1.9.0
+	github.com/stuttgart-things/sthingsBase v0.1.41
 	github.com/tektoncd/pipeline v0.53.3
 	k8s.io/api v0.27.1
 	k8s.io/apimachinery v0.28.0-alpha.1
@@ -67,7 +67,7 @@ require (
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/oauth2 v0.15.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/term v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
