@@ -13,7 +13,7 @@ import (
 
 var (
 	namespace        = "default"
-	pathToKubeconfig = "/home/sthings/.kube/pve-cd43"
+	pathToKubeconfig = "/home/sthings/.kube/config"
 	validManifest    = `apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,7 +36,7 @@ func TestCreateDynamicResourcesFromTemplate(t *testing.T) {
 	assert := assert.New(t)
 
 	namespace := "default"
-	clusterConfig, _ := GetKubeConfig("/home/sthings/.kube/pve-cd43")
+	clusterConfig, _ := GetKubeConfig("/home/sthings/.kube/config")
 
 	fmt.Println(validManifest)
 	fmt.Println(invalidManifest)

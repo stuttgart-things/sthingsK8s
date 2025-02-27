@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetKubeConfig(t *testing.T) {
-	clusterConfig, _ := GetKubeConfig("/home/sthings/.kube/pve-cd43")
+	clusterConfig, _ := GetKubeConfig("/home/sthings/.kube/config")
 
 	ns := GetK8sNamespaces(clusterConfig)
 	fmt.Println(ns)
