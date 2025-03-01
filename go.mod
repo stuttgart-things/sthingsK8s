@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/ghodss/yaml v1.0.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.10.0
 	github.com/stuttgart-things/sthingsBase v0.1.11
 	github.com/tektoncd/pipeline v0.53.3
 	k8s.io/api v0.27.1
